@@ -100,25 +100,25 @@ Follow these steps to set up the project on your local machine.
 ```bash
 CRUD-Menu/
 │
-├── src/                     
+├── src/                     # Core application files
 │   ├── main.py              # Main entry point for the application
 │   ├── database.py          # Database connection and CRUD functions
-│   ├── ui_main.py           # PySide UI setup and logic (manual UI creation)
-│   ├── pdf_generator.py     # PDF generation with ReportLab
-│   ├── ui_preview.py        # PDF preview with zoom, save, and printing options
-│   ├── resources_rc.py      
-│   ├── resources_rc.qrc     
+│   ├── ui_main.py           # UI setup and logic using PySide
+│   ├── pdf_generator.py     # PDF creation with ReportLab
+│   ├── ui_preview.py        # PDF preview, zoom, save, and print options
+│   ├── resources_rc.py      # Compiled resources for UI (auto-generated)
+│   ├── resources_rc.qrc     # XML resource file listing images and icons
 │
-├── assets/                  
-│   └── images/              # Contains UI screenshots, logo
+├── assets/                  # Contains UI assets (images, icons)
+│   └── images/              # UI screenshots, logos, etc.
 │   └── icons/               # UI icons
 │
-├── db/                      
+├── db/                      # Database-related files
 │   ├── schema.sql           # Database schema setup
-│   └── config.json          # Database configuration (e.g., credentials)
+│   └── config.json          # Database configuration (credentials, etc.)
 │
-├── README.md                # Project description and usage guide
-└── requirements.txt         # Python dependencies for the project                 
+├── README.md                # Project overview and usage guide
+└── requirements.txt         # List of project dependencies               
 ```
 
 ## 📷 Screenshots
