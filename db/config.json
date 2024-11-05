@@ -1,0 +1,8 @@
+{
+    "host": "localhost",
+    "user": "cafe_user",
+    "password": "1234cafe",
+    "database": "cafeteria_menu",
+    "port": 3306
+}
+  

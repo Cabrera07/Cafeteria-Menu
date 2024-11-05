@@ -1,0 +1,24 @@
+<RCC>
+    <qresource prefix="/">
+        <!-- Icons -->
+        <file>../assets/icons/add.png</file>
+        <file>../assets/icons/arrow.png</file>
+        <file>../assets/icons/bin.png</file>
+        <file>../assets/icons/clean.png</file>
+        <file>../assets/icons/refresh-page-option.png</file>
+        <file>../assets/icons/magnifier.png</file>
+        <file>../assets/icons/paper.png</file>
+        <file>../assets/icons/right-arrow.png</file>
+        <file>../assets/icons/upload.png</file>
+        <file>../assets/icons/close.png</file>
+        <file>../assets/icons/zoom-in.png</file>
+        <file>../assets/icons/zoom-out.png</file>
+        <file>../assets/icons/pdf.png</file>
+        <file>../assets/icons/down-arrow.png</file>
+        <file>../assets/icons/diskette.png</file>
+
+        <!-- Images -->
+        <file>../assets/images/coffee-beans.png</file>
+        <file>../assets/images/cup-of-drink.png</file>
+    </qresource>
+</RCC>
