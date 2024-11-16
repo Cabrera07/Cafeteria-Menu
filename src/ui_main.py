@@ -39,7 +39,7 @@ class MainWindow(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Café Menu Manager")
-        self.setMinimumSize(1500, 1000)
+        self.setMinimumSize(1400, 1000)
 
         # === Database Manager and State Variables ===
         config_path = str(Path(__file__).resolve().parent.parent / 'db' / 'config.json')
