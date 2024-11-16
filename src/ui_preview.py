@@ -39,7 +39,7 @@ class PDFPreviewDialog(QDialog):
         
         # Set window properties
         self.setWindowTitle("PDF Preview")
-        self.setMinimumSize(1100, 1250)
+        self.setMinimumSize(900, 1000)
         self.setStyleSheet("""
             QDialog {
                 background-color: #FFFFFF;
@@ -191,41 +191,55 @@ class PDFPreviewDialog(QDialog):
     def load_pdf(self):
         """Load and display the PDF pages with the current zoom level."""
         try:
+            # Validate PDF before loading
+            if not os.path.exists(self.pdf_path):
+                raise Exception("PDF file not found")
+
             # Open PDF document
             doc = fitz.open(self.pdf_path)
             
-            # Clear previous content
-            for i in reversed(range(self.content_layout.count())):
-                self.content_layout.itemAt(i).widget().setParent(None)
-            self.labels.clear()
-            
-            # Calculate zoom matrix
-            zoom_matrix = fitz.Matrix(2.0 * self.zoom_level, 2.0 * self.zoom_level)
-            
-            # Load each page
-            for page_num in range(len(doc)):
-                page = doc.load_page(page_num)
-                pix = page.get_pixmap(matrix=zoom_matrix)
+            try:
+                # Clear previous content
+                for i in reversed(range(self.content_layout.count())):
+                    self.content_layout.itemAt(i).widget().setParent(None)
+                self.labels.clear()
                 
-                # Convert to QImage
-                img = QImage(pix.samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888)
-                pixmap = QPixmap.fromImage(img)
+                # Calculate zoom matrix
+                zoom_matrix = fitz.Matrix(2.0 * self.zoom_level, 2.0 * self.zoom_level)
                 
-                # Create label and add to layout
-                label = QLabel()
-                label.setPixmap(pixmap)
-                label.setAlignment(Qt.AlignCenter)
-                self.content_layout.addWidget(label)
-                self.labels.append(label)  # Store reference to label
-            
-            doc.close()
-            
-            # Update zoom level indicator
-            self.zoom_label.setText(f"Zoom: {int(self.zoom_level * 100)}%")
-            
+                # Load each page
+                for page_num in range(len(doc)):
+                    try:
+                        page = doc.load_page(page_num)
+                        pix = page.get_pixmap(matrix=zoom_matrix)
+                        
+                        # Convert to QImage
+                        img = QImage(pix.samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888)
+                        if img.isNull():
+                            raise Exception(f"Failed to create image for page {page_num + 1}")
+                            
+                        pixmap = QPixmap.fromImage(img)
+                        
+                        # Create label and add to layout
+                        label = QLabel()
+                        label.setPixmap(pixmap)
+                        label.setAlignment(Qt.AlignCenter)
+                        self.content_layout.addWidget(label)
+                        self.labels.append(label)
+                        
+                    except Exception as e:
+                        raise Exception(f"Error processing page {page_num + 1}: {str(e)}")
+                
+                # Update zoom level indicator
+                self.zoom_label.setText(f"Zoom: {int(self.zoom_level * 100)}%")
+                
+            finally:
+                doc.close()
+                
         except Exception as e:
-            QMessageBox.critical(self, "Error", f"Error loading PDF: {str(e)}")
-
+            QMessageBox.critical(self, "Error", 
+                            f"Error loading PDF: {str(e)}\n"
+                            "Please ensure the file is a valid PDF and try again.")
 
 
 
@@ -296,58 +310,94 @@ class PDFPreviewDialog(QDialog):
 
     def print_pdf(self):
         """Print the PDF document at full page size by rendering each page directly onto the printable area."""
-        if not os.path.exists(self.pdf_path):
-            QMessageBox.critical(self, "Error", "PDF file not found")
-            return
+        try:
+            # Validate PDF existence
+            if not os.path.exists(self.pdf_path):
+                QMessageBox.critical(self, "Error", "PDF file not found")
+                return
 
-        # Set up the printer with high resolution and full page usage
-        printer = QPrinter(QPrinter.HighResolution)
-        printer.setPageSize(QPageSize(QPageSize.Letter))
-        printer.setFullPage(True)  
-
-        # Zero margins for full-area usage
-        margins = printer.pageLayout().margins()
-        margins.setLeft(0)
-        margins.setRight(0)
-        margins.setTop(0)
-        margins.setBottom(0)
-        printer.setPageMargins(margins)
-
-        dialog = QPrintDialog(printer, self)
-        if dialog.exec_() == QPrintDialog.Accepted:
+            # Validate PDF can be opened
             try:
-                doc = fitz.open(self.pdf_path)  
+                doc = fitz.open(self.pdf_path)
+                doc.close()
+            except Exception as e:
+                QMessageBox.critical(self, "Error", f"Invalid PDF file: {str(e)}")
+                return
+
+            # Set up the printer with high resolution and full page usage
+            printer = QPrinter(QPrinter.HighResolution)
+            if not printer.isValid():
+                QMessageBox.critical(self, "Error", "No valid printer found")
+                return
+
+            printer.setPageSize(QPageSize(QPageSize.Letter))
+            printer.setFullPage(True)  
+
+            # Zero margins for full-area usage
+            margins = printer.pageLayout().margins()
+            margins.setLeft(0)
+            margins.setRight(0)
+            margins.setTop(0)
+            margins.setBottom(0)
+            printer.setPageMargins(margins)
+
+            # Show print dialog
+            dialog = QPrintDialog(printer, self)
+            if dialog.exec_() == QPrintDialog.Accepted:
+                doc = None
                 painter = QPainter()
                 
-                if not painter.begin(printer):
-                    raise Exception("Could not open printer device")
-
                 try:
+                    doc = fitz.open(self.pdf_path)  
+                    
+                    # Verify printer device can be opened
+                    if not painter.begin(printer):
+                        raise Exception("Could not open printer device. Please check printer connection and status.")
+
                     for page_num in range(len(doc)):
+                        # Check printer status before each page
+                        if printer.printerState() == QPrinter.Error:
+                            raise Exception("Printer is not ready or has encountered an error")
+
                         if page_num > 0:
-                            printer.newPage()
+                            if not printer.newPage():
+                                raise Exception("Failed to create new page for printing")
 
                         page = doc[page_num]
                         
-                        # Calculate scaling matrix to fit PDF page into printer's full page area
-                        printer_rect = printer.pageRect(QPrinter.DevicePixel)
-                        matrix = fitz.Matrix(
-                            printer_rect.width() / page.rect.width,
-                            printer_rect.height() / page.rect.height
-                        )
-                        pix = page.get_pixmap(matrix=matrix)
+                        try:
+                            # Calculate scaling matrix to fit PDF page into printer's full page area
+                            printer_rect = printer.pageRect(QPrinter.DevicePixel)
+                            matrix = fitz.Matrix(
+                                printer_rect.width() / page.rect.width,
+                                printer_rect.height() / page.rect.height
+                            )
+                            pix = page.get_pixmap(matrix=matrix)
 
-                        # Convert pixmap to QImage and draw it to cover the entire printer page area
-                        img = QImage(pix.samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888)
-                        target_rect = QRect(0, 0, printer_rect.width(), printer_rect.height())
-                        painter.drawImage(target_rect, img)
+                            # Convert pixmap to QImage and draw it
+                            img = QImage(pix.samples, pix.width, pix.height, pix.stride, QImage.Format_RGB888)
+                            target_rect = QRect(0, 0, printer_rect.width(), printer_rect.height())
+                            
+                            if not painter.drawImage(target_rect, img):
+                                raise Exception(f"Failed to print page {page_num + 1}")
 
+                        except Exception as e:
+                            raise Exception(f"Error rendering page {page_num + 1}: {str(e)}")
+
+                except Exception as e:
+                    QMessageBox.critical(self, "Print Error", 
+                                    f"Error during printing: {str(e)}\n"
+                                    "Please check your printer connection and try again.")
                 finally:
-                    painter.end()
-                    doc.close()
+                    if painter.isActive():
+                        painter.end()
+                    if doc:
+                        doc.close()
 
-            except Exception as e:
-                QMessageBox.critical(self, "Print Error", f"Error printing PDF: {str(e)}")
+        except Exception as e:
+            QMessageBox.critical(self, "Print Error", 
+                            f"An unexpected error occurred: {str(e)}\n"
+                            "Please try again or contact support if the problem persists.")
 
 
 
