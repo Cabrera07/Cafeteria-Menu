@@ -41,6 +41,22 @@ CREATE INDEX idx_menu_items_name ON menu_items(name);
 CREATE INDEX idx_menu_items_category ON menu_items(category_id);
 
 
--- Example queries to retrieve all categories and menu items
+-- Queries to retrieve all categories and menu items
 SELECT * FROM categories;
 SELECT * FROM menu_items;
+
+-- Query to retrieve menu items information along with the category name
+SELECT 
+    menu_items.id AS menu_item_id,
+    menu_items.name AS menu_item_name,
+    menu_items.description,
+    categories.name AS category_name,
+    menu_items.price,
+    menu_items.image_name,
+    menu_items.image
+FROM 
+    menu_items
+JOIN 
+    categories
+ON 
+    menu_items.category_id = categories.id;

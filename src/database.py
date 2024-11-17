@@ -278,19 +278,17 @@ class DatabaseManager:
     ###############################################################################
 
     def get_all_menu_items(self) -> List[MenuItem]:
-        """Retrieve all menu items from the database."""
-
-        self.ensure_connection()
+        """Retrieve all menu items from the database with their associated categories."""
+        self.ensure_connection()  # Ensure the database connection is active
+        cursor = self.connection.cursor(dictionary=True)
         
         try:
-            cursor = self.connection.cursor(dictionary=True)
             query = """
-                SELECT m.*, c.name as category_name 
+                SELECT SQL_NO_CACHE m.*, c.name as category_name
                 FROM menu_items m
                 JOIN categories c ON m.category_id = c.id
                 ORDER BY m.name
             """
-            
             cursor.execute(query)
             results = cursor.fetchall()
             
@@ -307,13 +305,9 @@ class DatabaseManager:
                 )
                 for row in results
             ]
-        
-        except Error as e:
-            raise Exception(f"Error fetching menu items: {e}")
-        
         finally:
-            cursor.close()
-
+            cursor.close() 
+   
    
     def get_categories(self) -> List[Tuple[int, str]]:
         """Retrieve all categories from the database."""
