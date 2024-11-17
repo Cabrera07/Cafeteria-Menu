@@ -16,9 +16,9 @@
         <file>../assets/icons/pdf.png</file>
         <file>../assets/icons/down-arrow.png</file>
         <file>../assets/icons/diskette.png</file>
+        <file>../assets/icons/text-box.png</file>
 
         <!-- Images -->
-        <file>../assets/images/coffee-beans.png</file>
         <file>../assets/images/cup-of-drink.png</file>
     </qresource>
 </RCC>
