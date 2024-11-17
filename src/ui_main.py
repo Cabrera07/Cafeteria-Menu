@@ -216,6 +216,7 @@ class MainWindow(QMainWindow):
         form_layout.addLayout(image_layout)
         
 
+
         # == Right Side: Form Fields for Item Details ==
         fields_layout = QVBoxLayout()
         fields_layout.setSpacing(50)  
@@ -279,6 +280,7 @@ class MainWindow(QMainWindow):
         layout.addLayout(form_layout)
         
 
+
         # == Buttons Layout ==
         buttons_layout = QHBoxLayout()
         buttons_layout.setSpacing(10)
@@ -299,13 +301,18 @@ class MainWindow(QMainWindow):
         self.new_btn.setIconSize(QSize(35, 35))
 
         # Save
-        self.save_btn = QPushButton(QIcon(":/assets/icons/refresh-page-option.png"), " Update")
+        self.save_btn = QPushButton(QIcon(":/assets/icons/text-box.png"), "  Save Edit")
         self.save_btn.setIconSize(QSize(35, 35))
 
         # Delete 
         self.delete_btn = QPushButton(" Delete")
         self.delete_btn.setIcon(QIcon(":/assets/icons/bin.png"))
         self.delete_btn.setIconSize(QSize(35, 35))
+        
+        # Rfresh
+        self.refresh_btn = QPushButton(" Refresh")
+        self.refresh_btn.setIcon(QIcon(":/assets/icons/refresh-page-option.png"))
+        self.refresh_btn.setIconSize(QSize(35, 35))
         
         # Print 
         self.print_btn = QPushButton(QIcon(":/assets/icons/paper.png"), " Print")
@@ -324,7 +331,8 @@ class MainWindow(QMainWindow):
             self.save_btn,
             self.delete_btn,
             self.print_btn,
-            self.clear_btn
+            self.clear_btn,
+            self.refresh_btn 
         ]
         
         for button in buttons:
@@ -348,6 +356,7 @@ class MainWindow(QMainWindow):
         self.delete_btn.clicked.connect(self.delete_item)
         self.print_btn.clicked.connect(self.print_item)
         self.clear_btn.clicked.connect(self.clear_fields)
+        self.refresh_btn.clicked.connect(self.refresh_data)
         
         # Search connection
         self.search_input.textChanged.connect(self.search_items)
@@ -428,6 +437,30 @@ class MainWindow(QMainWindow):
             self.image_label.setPixmap(scaled_pixmap)
         except Exception as e:
             self.show_error("Error displaying image", str(e))
+    
+    def refresh_data(self):
+        """Refresh data from the database and update the UI."""
+        try:
+            # Force close the connection to clear internal state
+            if self.db.connection:
+                self.db.connection.close()
+            self.db.connect()  
+
+            self.load_categories()
+            self.current_items = self.db.get_all_menu_items()
+
+            if self.current_items:
+                self.current_index = 0
+                self.display_current_item()
+            else:
+                self.current_index = -1
+                self.clear_fields()
+
+            self.update_navigation_buttons()
+            QMessageBox.information(self, "Success", "Data refreshed successfully")
+
+        except Exception as e:
+            self.show_error("Error refreshing data", str(e))
 
 
 
@@ -676,7 +709,7 @@ class MainWindow(QMainWindow):
                 pass  
                 
         except Exception as e:
-            self.show_error("Error generating PDF", str(e))
+            self.show_error("Error generating PDF", str(e))    
 
     def closeEvent(self, event):
         """Handle application closure"""
