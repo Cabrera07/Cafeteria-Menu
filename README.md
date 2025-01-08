@@ -5,7 +5,7 @@
 [![MySQL](https://img.shields.io/badge/MySQL-Database-bf720d?labelColor=000000&style=for-the-badge&logo=mysql&logoColor=FFFFFF&link=https://www.mysql.com/)](https://www.mysql.com/)
 [![License](https://img.shields.io/badge/License-MIT-5d0000?labelColor=000000&style=for-the-badge&logo=opensourceinitiative&logoColor=FFFFFF)](LICENSE)
 
-A **Python desktop application** for managing and printing individual menu items with ease. This app provides an intuitive interface for handling **CRUD operations** (Create, Read, Update, Delete) and includes features like **PDF generation** and **print preview** included to provide additional features.
+A **Python desktop application** for managing and printing individual menu items with ease. This app provides an intuitive interface for handling **CRUD operations** (Create, Read, Update, Delete) and includes features like **PDF generation** and **print preview**  for detailed reporting.
 
 ![alt text](/assets/images/mockup-main.png)
 
@@ -13,6 +13,7 @@ A **Python desktop application** for managing and printing individual menu items
 
 - [☕ Cafeteria Menu Management App](#-cafeteria-menu-management-app)
   - [📚 Table of Contents](#-table-of-contents)
+  - [👥 Who is this app for?](#-who-is-this-app-for)
   - [✨ Features](#-features)
     - [🛠 CRUD Functionality for Cafeteria Menu](#-crud-functionality-for-cafeteria-menu)
     - [🔍 Search \& Navigate Records](#-search--navigate-records)
@@ -29,12 +30,19 @@ A **Python desktop application** for managing and printing individual menu items
     - [🔧 Submitting Code Changes](#-submitting-code-changes)
   - [📜 License](#-license)
 
+## 👥 Who is this app for?
+
+***This app is ideal for:***
+
+- **👨‍💻 Developers**: Perfect for learning CRUD operations, database integration, and PDF handling in Python.
+- **📒 Hobbyists**: Great for projects that require structured management of individual items.
+
 ## ✨ Features
 
 ### 🛠 CRUD Functionality for Cafeteria Menu
 
 - Add, update, delete, and view menu items seamlessly.
-- Store detailed information for each menu item, including:
+- **Store detailed information for each menu item, including:**
   - 📸 Image
   - 💲 Price
   - 🏷 Name and ID
@@ -49,16 +57,16 @@ A **Python desktop application** for managing and printing individual menu items
 
 ### 🖨 Generate PDF Reports
 
-- 📝 **Print Single Items:** Create a detailed PDF report for individual menu items.
+- 📝 **Print Single Items:** Generate detailed PDFs for menu items.
 - 👁️ **Preview & Print:** View, zoom, save, and print item details directly from the app.
 
 ## 🧰 Technologies Used
 
 ***This application uses modern tools and libraries to deliver a robust user experience:***
 
-- 🎨 **PySide6**: For building the user interface.
-- 🗄️ **MySQL**: To manage menu item data efficiently.
-- 🖨️ **ReportLab** and **PyMuPDF**: For generating and previewing PDF reports.
+- 🎨 **[PySide6](https://pypi.org/project/PySide6/)**: For building the user interface.
+- 🗄️ **[MySQL](https://www.mysql.com/)**: To manage menu item data efficiently.
+- 🖨️ **[ReportLab](https://docs.reportlab.com/)** and **[PyMuPDF](https://pymupdf.readthedocs.io/)**: For generating and previewing PDF reports.
 
 ## 📋 Getting Started
 
