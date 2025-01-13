@@ -3,39 +3,11 @@
 [![Python](https://img.shields.io/badge/Python-3.12.3-336ea0?labelColor=000000&style=for-the-badge&logo=python&logoColor=FFFFFF&link=https://www.python.org/downloads/release/python-3123/)](https://www.python.org/downloads/release/python-3123/)
 [![PySide6](https://img.shields.io/badge/PySide6-UI%20Framework-21aa66?labelColor=000000&style=for-the-badge&logo=qt&logoColor=FFFFFF&link=https://pypi.org/project/PySide6/)](https://pypi.org/project/PySide6/)
 [![MySQL](https://img.shields.io/badge/MySQL-Database-bf720d?labelColor=000000&style=for-the-badge&logo=mysql&logoColor=FFFFFF&link=https://www.mysql.com/)](https://www.mysql.com/)
-[![License](https://img.shields.io/badge/License-MIT-5d0000?labelColor=000000&style=for-the-badge&logo=opensourceinitiative&logoColor=FFFFFF)](LICENSE)
 
-A **Python desktop application** for managing and printing individual menu items with ease. This app provides an intuitive interface for handling **CRUD operations** (Create, Read, Update, Delete) and includes features like **PDF generation** and **print preview**  for detailed reporting.
+A **Python desktop app** for managing cafeteria menu items with CRUD operations and PDF generation.  
+Ideal for developers and learners exploring database integration, GUI design, and PDF handling.
 
 ![alt text](/assets/images/mockup-main.png)
-
-## 📚 Table of Contents
-
-- [☕ Cafeteria Menu Management App](#-cafeteria-menu-management-app)
-  - [📚 Table of Contents](#-table-of-contents)
-  - [👥 Who is this app for?](#-who-is-this-app-for)
-  - [✨ Features](#-features)
-    - [🛠 CRUD Functionality for Cafeteria Menu](#-crud-functionality-for-cafeteria-menu)
-    - [🔍 Search \& Navigate Records](#-search--navigate-records)
-    - [🖨 Generate PDF Reports](#-generate-pdf-reports)
-  - [🧰 Technologies Used](#-technologies-used)
-  - [📋 Getting Started](#-getting-started)
-    - [🔧 Prerequisites](#-prerequisites)
-    - [📦 Installation](#-installation)
-  - [📋 Usage](#-usage)
-  - [🗂 Project Folder Structure](#-project-folder-structure)
-  - [📷 Screenshots](#-screenshots)
-  - [🤝 Contributing](#-contributing)
-    - [📝 Reporting Issues](#-reporting-issues)
-    - [🔧 Submitting Code Changes](#-submitting-code-changes)
-  - [📜 License](#-license)
-
-## 👥 Who is this app for?
-
-***This app is ideal for:***
-
-- **👨‍💻 Developers**: Perfect for learning CRUD operations, database integration, and PDF handling in Python.
-- **📒 Hobbyists**: Great for projects that require structured management of individual items.
 
 ## ✨ Features
 
@@ -61,8 +33,6 @@ A **Python desktop application** for managing and printing individual menu items
 - 👁️ **Preview & Print:** View, zoom, save, and print item details directly from the app.
 
 ## 🧰 Technologies Used
-
-***This application uses modern tools and libraries to deliver a robust user experience:***
 
 - 🎨 **[PySide6](https://pypi.org/project/PySide6/)**: For building the user interface.
 - 🗄️ **[MySQL](https://www.mysql.com/)**: To manage menu item data efficiently.
@@ -123,15 +93,6 @@ A **Python desktop application** for managing and printing individual menu items
     python main.py
     ```
 
-## 📋 Usage
-
-***Here’s how you can use the app:***
-
-- ✏️ **CRUD Operations**: Add, update, delete, or view menu items.
-- 🔎 **Search**: Use the search bar to find items by name or category.
-- 🖨️ **Preview & Print**: Preview a PDF of item details and print it.
-- ⬅️➡️ **Navigation**: Use "Next" and "Previous" to browse menu items.
-
 ## 🗂 Project Folder Structure
 
 ```bash
@@ -165,41 +126,15 @@ CRUD-Menu/
 
 ## 🤝 Contributing
 
-**Contributions are welcome! To contribute:**
+***Contributions are welcome! If you'd like to contribute:***
 
-### 📝 Reporting Issues
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch-name`).
+3. Commit your changes (`git commit -m "Brief description of changes"`).
+4. Push to the branch (`git push origin feature-branch-name`).
+5. Open a pull request.
 
-***If you encounter a bug or have a feature request, you can:***
-
-1. Go to the **[Issues](https://github.com/Cabrera07/Cafeteria-Menu/issues)** tab.
-2. Click **New Issue** and provide a clear description of the problem or suggestion.
-3. Use labels like `bug`, `enhancement`, or `question` to categorize your issue.
-
-### 🔧 Submitting Code Changes
-
-1. **Fork the repository**.
-2. **Create a new branch** (`git switch -c feature-branch`).
-3. Make your changes and **use Conventional Commits** for your commit messages:
-    - **`feat:`** A new feature.
-    - **`fix:`** A bug fix.
-    - **`docs:`** Documentation changes.
-    - **`style:`** Code style changes.
-    - **`refactor:`** Refactoring existing code.
-    - **`test:`** Adding or updating tests.
-
-4. **Follow Branch Structure**:
-    - **`main:`** The stable branch for production-ready code.
-    - **`develop:`** The development branch where new features and bug fixes are merged before going to main.
-    - **`feature:`** Feature-specific branches, each created off develop.
-
-5. **Create a Pull Request**:
-   - Push your branch to your forked repository.
-   - Open a **pull request** to the `develop` branch in this repository.
-   - Provide a clear description of your changes, linking to related issues if applicable.
-
-6. **Wait for Review**:
-   - Your pull request will be reviewed, and feedback may be provided.
-   - Once approved, your changes will be merged.
+Feel free to report issues or suggest features via the [Issues](https://github.com/Cabrera07/Cafeteria-Menu/issues) tab.
 
 ## 📜 License
 
