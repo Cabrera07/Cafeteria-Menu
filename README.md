@@ -53,7 +53,7 @@ Ideal for developers and learners exploring database integration, GUI design, an
 1. **Clone this repository:**
 
     ```bash
-    git clone https://github.com/Cabrera07/Cafeteria-Menu.git
+    git clone https://github.com/RossCabrera/Cafeteria-Menu.git
     cd CRUD-Menu
     ```
 
@@ -134,7 +134,7 @@ CRUD-Menu/
 4. Push to the branch (`git push origin feature-branch-name`).
 5. Open a pull request.
 
-Feel free to report issues or suggest features via the [Issues](https://github.com/Cabrera07/Cafeteria-Menu/issues) tab.
+Feel free to report issues or suggest features via the [Issues](https://github.com/RossCabrera/Cafeteria-Menu/issues) tab.
 
 ## 📜 License
 
